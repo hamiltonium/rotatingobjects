@@ -35,7 +35,8 @@ class BodyFrame(object):
         self.k = numpy.array([0,0,1])
         self.omega = numpy.array([0,0,0])
         self.omega_dot = numpy.array([0,0,0])
-    
+        self.omega_norm = numpy.linalg.norm(self.omega)
+
     def update(self,dt):
         """Updates the attributes of Body Frame for one timestep."""
         i_dot = numpy.cross(self.omega, i)
