@@ -27,7 +27,7 @@ class BodyFrame(object):
     omega: the angular velocity that the frame is rotating at. In the body frame
     omega_dot: the first derivative of the angular velocity omega.
     omega_norm: the norm of omega. Should remain constant."""
-    def __init__(self):
+    def __init__(self,**kwargs):
         """Creates an instance of the class BodyFrame."""
         self.I = numpy.array([1,1,1])
         self.i = numpy.array([1,0,0])
@@ -36,6 +36,29 @@ class BodyFrame(object):
         self.omega = numpy.array([0,0,0])
         self.omega_dot = numpy.array([0,0,0])
         self.omega_norm = numpy.linalg.norm(self.omega)
+        for key, value in kwargs.iteritems():
+    
+            if type(value) is numpy.ndarray:
+                if key == 'I':
+                    self.I = value
+                elif key == 'i':
+                    self.i = value
+                elif key == 'j':
+                    self.j = value
+                elif key == 'k':
+                    self.k = value
+                elif key == 'omega':
+                    self.omega = value
+                    self.omega_norm = numpy.linalg.norm(self.omega)
+                elif key == 'omega_dot':
+                    self.omega_dot = value
+                else:
+                    print '''Warning: %s is not a keyword.  
+                    It will be ignored.''' % key
+            else:
+                print '''Warning: %s is not a numpy.ndarray. Unable to
+                save %s.  Using default value.''' % (key, key)
+
 
 
     def update(self,dt):
